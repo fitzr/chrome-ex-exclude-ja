@@ -41,7 +41,7 @@ function initIcon() {
 }
 
 function activateExcludingJa(tab) {
-  chrome.tabs.update(tab.id, {url: tab.url+QUERY_EXCLUDE_JA})
+  chrome.tabs.update(tab.id, {url: tab.url + QUERY_EXCLUDE_JA})
 }
 
 function inactivateExcludeJa(tab) {
@@ -50,16 +50,15 @@ function inactivateExcludeJa(tab) {
 
 function onClickIcon() {
   chrome.tabs.getSelected(null, function(tab) {
-    if (isGoogle(tab.url)) {
-      if (isExcluding(tab.url)) inactivateExcludeJa(tab)
-      else activateExcludingJa(tab)
+    if (!isGoogle(tab.url)) {
+      // NOP
     }
-  })
-}
-
-function onChangeTab() {
-  chrome.tabs.getSelected(null, function(tab) {
-    updateIcon(tab.url)
+    else if (isExcluding(tab.url)) {
+      inactivateExcludeJa(tab)
+    }
+    else {
+      activateExcludingJa(tab)
+    }
   })
 }
 
@@ -69,7 +68,7 @@ function onChangeUrl(tabId, changeInfo) {
   }
 }
 
-chrome.tabs.onActivated.addListener(onChangeTab)
+chrome.tabs.onActivated.addListener(initIcon)
 chrome.tabs.onUpdated.addListener(onChangeUrl)
 chrome.browserAction.onClicked.addListener(onClickIcon)
 initIcon()
