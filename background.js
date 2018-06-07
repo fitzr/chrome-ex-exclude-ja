@@ -18,14 +18,20 @@ function isExcluding(url) {
   return REGEXP_EXCLUDE_JA.test(url)
 }
 
-function setIcon(state) {
-  chrome.browserAction.setIcon({path: Icon[state]})
+function setIcon(icon) {
+  chrome.browserAction.setIcon({path: icon})
 }
 
 function updateIcon(url) {
-  if (!isGoogle(url)) setIcon('DISABLE')
-  else if (isExcluding(url)) setIcon('EXCLUDING')
-  else setIcon('ENABLE')
+  if (!isGoogle(url)) {
+    setIcon(Icon.DISABLE)
+  }
+  else if (isExcluding(url)) {
+    setIcon(Icon.EXCLUDING)
+  }
+  else {
+    setIcon(Icon.ENABLE)
+  }
 }
 
 function initIcon() {
@@ -51,12 +57,19 @@ function onClickIcon() {
   })
 }
 
-function onChangeUrl(tabId, changeInfo) {
-  console.log('test test test')
-  console.log(changeInfo)
-  updateIcon(changeInfo.url)
+function onChangeTab() {
+  chrome.tabs.getSelected(null, function(tab) {
+    updateIcon(tab.url)
+  })
 }
 
+function onChangeUrl(tabId, changeInfo) {
+  if(changeInfo.url) {
+    updateIcon(changeInfo.url)
+  }
+}
+
+chrome.tabs.onActivated.addListener(onChangeTab)
 chrome.tabs.onUpdated.addListener(onChangeUrl)
 chrome.browserAction.onClicked.addListener(onClickIcon)
 initIcon()
