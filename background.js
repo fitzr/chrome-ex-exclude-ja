@@ -40,7 +40,7 @@ function initIcon() {
   })
 }
 
-function activateExcludingJa(tab) {
+function activateExcludeJa(tab) {
   chrome.tabs.update(tab.id, {url: tab.url + QUERY_EXCLUDE_JA})
 }
 
@@ -57,7 +57,7 @@ function onClickIcon() {
       inactivateExcludeJa(tab)
     }
     else {
-      activateExcludingJa(tab)
+      activateExcludeJa(tab)
     }
   })
 }
