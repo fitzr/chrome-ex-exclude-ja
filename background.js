@@ -1,7 +1,7 @@
 'use strict'
 
-const QUERY_EXCLUDE_JA = '&lr=-lang_ja'
-const REGEXP_EXCLUDE_JA = /&lr=-lang_ja/
+const EXCLUDE_JA = '&lr=-lang_ja'
+const REGEXP_EXCLUDE_JA = /&?lr=-lang_ja/
 const REGEXP_GOOGLE_SEARCH_URL = /^https?:\/\/www\.google\.(com|co\.jp)\/search\?/
 
 const Icon = {
@@ -41,11 +41,11 @@ function initIcon() {
 }
 
 function activateExcludeJa(tab) {
-  chrome.tabs.update(tab.id, {url: tab.url + QUERY_EXCLUDE_JA})
+  chrome.tabs.update(tab.id, {url: tab.url + EXCLUDE_JA})
 }
 
 function inactivateExcludeJa(tab) {
-  chrome.tabs.update(tab.id, {url: tab.url.replace(QUERY_EXCLUDE_JA, '')})
+  chrome.tabs.update(tab.id, {url: tab.url.replace(REGEXP_EXCLUDE_JA, '')})
 }
 
 function onClickIcon() {
