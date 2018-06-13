@@ -10,8 +10,8 @@ Chrome extension to exclude lang_ja from google search results.
 ## Installation
 
 1. clone or download
-1. load unpacked to [chrome://extensions/]()
+1. load unpacked to *chrome://extensions/*
 
 ## Licence
 
-[MIT](https://github.com/tcnksm/tool/blob/master/LICENCE)
+MIT
