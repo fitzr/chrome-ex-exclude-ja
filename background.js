@@ -1,28 +1,21 @@
-'use strict'
 
 const EXCLUDE_JA = '&lr=-lang_ja'
 const REGEXP_EXCLUDE_JA = /&?lr=-lang_ja/
 const REGEXP_GOOGLE_SEARCH_URL = /^https?:\/\/www\.google\.(com|co\.jp)\/search\?/
 
 const Icon = {
-  DISABLE: "disable.png",
-  ENABLE: "enable.png",
-  EXCLUDING: "excluding.png"
+  DISABLE: "images/disable.png",
+  ENABLE: "images/enable.png",
+  EXCLUDING: "images/icon48.png"
 }
 
-function isGoogle(url) {
-  return REGEXP_GOOGLE_SEARCH_URL.test(url)
-}
+const isGoogle = url => REGEXP_GOOGLE_SEARCH_URL.test(url)
 
-function isExcluding(url) {
-  return REGEXP_EXCLUDE_JA.test(url)
-}
+const isExcluding = url => REGEXP_EXCLUDE_JA.test(url)
 
-function setIcon(icon) {
-  chrome.browserAction.setIcon({path: icon})
-}
+const setIcon = icon => chrome.action.setIcon({path: icon})
 
-function updateIcon(url) {
+const updateIcon = url => {
   if (!isGoogle(url)) {
     setIcon(Icon.DISABLE)
   }
@@ -34,22 +27,31 @@ function updateIcon(url) {
   }
 }
 
-function initIcon() {
-  chrome.tabs.getSelected(null, function(tab) {
-    updateIcon(tab.url)
+const currentTab = fn => {
+  chrome.windows.getCurrent( w => {
+    chrome.tabs.query({
+      active: true,
+      windowId: w.id
+    }, tabs => {
+      fn(tabs[0])
+    })
   })
 }
 
-function activateExcludeJa(tab) {
+const initIcon = () => {
+  currentTab(tab => updateIcon(tab.url))
+}
+
+const activateExcludeJa = tab => {
   chrome.tabs.update(tab.id, {url: tab.url + EXCLUDE_JA})
 }
 
-function inactivateExcludeJa(tab) {
+const inactivateExcludeJa = tab => {
   chrome.tabs.update(tab.id, {url: tab.url.replace(REGEXP_EXCLUDE_JA, '')})
 }
 
-function onClickIcon() {
-  chrome.tabs.getSelected(null, function(tab) {
+const onClickIcon = () => {
+  currentTab(tab => {
     if (!isGoogle(tab.url)) {
       // NOP
     }
@@ -62,7 +64,7 @@ function onClickIcon() {
   })
 }
 
-function onChangeUrl(tabId, changeInfo) {
+const onChangeUrl = (tabId, changeInfo) => {
   if(changeInfo.url) {
     updateIcon(changeInfo.url)
   }
@@ -70,5 +72,5 @@ function onChangeUrl(tabId, changeInfo) {
 
 chrome.tabs.onActivated.addListener(initIcon)
 chrome.tabs.onUpdated.addListener(onChangeUrl)
-chrome.browserAction.onClicked.addListener(onClickIcon)
+chrome.action.onClicked.addListener(onClickIcon)
 initIcon()

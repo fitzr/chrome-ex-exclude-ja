@@ -1,15 +1,26 @@
 {
+  "manifest_version": 3,
   "name": "Exclude lang_ja",
-  "short_name": "-ja",
-  "description": "Exclude lang_ja from google search results.",
-  "version": "0.0",
+  "version": "1.0.0",
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "24": "images/icon24.png",
+      "32": "images/icon32.png"
+    },
+    "default_title": "Exclude ja"
+  },
+  "default_locale": "ja",
+  "description": "__MSG_description__",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "author": "fitzr",
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background-worker.js"
   },
   "permissions": ["tabs"],
-  "browser_action": {
-    "name": "exclude ja"
-  },
-  "manifest_version": 2
+  "homepage_url": "https://github.com/fitzr/chrome-ex-exclude-ja"
 }
