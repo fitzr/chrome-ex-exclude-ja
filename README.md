@@ -6,7 +6,7 @@ Chrome extension to exclude lang_ja from google search results.
 
 ## Demo
 
-![](https://github.com/fitzr/chrome-ex-exclude-ja/blob/asset/exclude.gif)
+<img src="https://github.com/fitzr/chrome-ex-exclude-ja/blob/asset/exclude.gif" width="600">
 
 ## Installation
 
