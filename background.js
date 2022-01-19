@@ -1,6 +1,6 @@
 
-const EXCLUDE_JA = '&lr=-lang_ja'
-const REGEXP_EXCLUDE_JA = /&?lr=-lang_ja/
+const EXCLUDE_JA = '&lr=lang_en'
+const REGEXP_EXCLUDE_JA = /&?lr=lang_en/
 const REGEXP_POSITION = /&start=[0-9]+/
 const REGEXP_GOOGLE_SEARCH_URL = /^https?:\/\/www\.google\.(com|co\.jp)\/search\?/
 
