@@ -1,8 +1,8 @@
 chrome-ex-exclude-ja
 ===
 
-Chrome extension to exclude lang_ja from google search results.  
-ワンクリックで google 検索結果から日本語を除去する（英語のみにする）クロームエクステンション。
+Chrome extension to search English result on Google.  
+ワンクリックで google 検索結果を英語のみにするクロームエクステンション。
 
 ## Demo
 
