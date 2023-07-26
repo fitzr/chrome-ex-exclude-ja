@@ -2,6 +2,7 @@
 const EXCLUDE_JA = '&gl=us&hl=en'
 const REGEXP_EXCLUDE_JA = /&?gl=us&hl=en/
 const REGEXP_POSITION = /&start=[0-9]+/
+const REGEXP_HASHTAG = /#.*$/
 const REGEXP_GOOGLE_SEARCH_URL = /^https?:\/\/www\.google\.(com|co\.jp)\/search\?/
 
 const Icon = {
@@ -45,7 +46,7 @@ const initIcon = () => {
 
 const activateExcludeJa = tab => {
   chrome.tabs.update(tab.id, {
-    url: (tab.url + EXCLUDE_JA).replace(REGEXP_POSITION, '')
+    url: tab.url.replace(REGEXP_HASHTAG, '').replace(REGEXP_POSITION, '') + EXCLUDE_JA
   })
 }
 
